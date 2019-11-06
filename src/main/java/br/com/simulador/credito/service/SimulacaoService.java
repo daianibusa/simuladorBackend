@@ -1,4 +1,3 @@
-
 package br.com.simulador.credito.service;
 
 import br.com.simulador.credito.entity.ModalidadeEntity;
@@ -18,38 +17,33 @@ import java.util.Date;
  * @author Daiani
  */
 @Service
-public class SimulacaoService implements IBaseService<SimulacaoEntity> {
-    
+public class SimulacaoService {
+
     @Autowired //Injeta uma instancia da interface SimulacaoRepository - é o mesmo que Simulacao simulacao = new Simulacao()
     private SimulacaoRepository repository;
-    
+
     @Autowired
     private ModalidadeRepository modalidadeRepository;
-    
-   
-    
-     //Método para buscar todos os registros da tabela
-    @Override
-    public List<SimulacaoEntity> listarTodos(){
+
+    //Método para buscar todos os registros da tabela
+    public List<SimulacaoEntity> listarTodos() {
         return repository.findAll();
     }
-    
+
     //Método que busca um registro pelo id no banco de dados e retorna este registro 
-    @Override
-    public SimulacaoEntity listarPorId(Integer id){
+    public SimulacaoEntity listarPorId(Integer id) {
         return repository.getOne(id);
     }
-    
-    //Método que salva o registro no banco de dados
 
-    public SimulacaoEntity salvar (SimulacaoVO vo){
+    //Método que salva o registro no banco de dados
+    public SimulacaoEntity salvar(SimulacaoVO vo) {
 
         TaxaEntity taxaSelecionada = obterTaxa(vo);
-       
+
         BigDecimal pmt = calcularValorParcelas(taxaSelecionada, vo);
-        
+
         BigDecimal valorTotal = calcularValorTotal(pmt, vo);
-        
+
         SimulacaoEntity simulacao = new SimulacaoEntity();
         simulacao.setCodigoModalidade(taxaSelecionada.getModalidade().getCodigoModalidade());
         simulacao.setDataSimulacao(new Date());
@@ -60,16 +54,16 @@ public class SimulacaoService implements IBaseService<SimulacaoEntity> {
         simulacao.setResultadoValorTotal(valorTotal);
         simulacao.setTelefone(vo.getTelefone());
         simulacao.setValorSimulacao(vo.getValorSimulacao());
-        
-        
+
         return repository.save(simulacao);
     }
-    
-    private TaxaEntity obterTaxa(SimulacaoVO vo){
-           ModalidadeEntity modalidade = modalidadeRepository.getOne(vo.getIdModalidade());
+
+    //Método que obtem a taxa de juros baseado na quantidade de parcelas informado 
+    private TaxaEntity obterTaxa(SimulacaoVO vo) {
+        ModalidadeEntity modalidade = modalidadeRepository.getOne(vo.getIdModalidade());
         TaxaEntity taxaSelecionada = null;
         for (TaxaEntity taxa : modalidade.getTaxas()) {
-            if(taxa.getParcelas()>=vo.getQuantidadeParcelas()){
+            if (taxa.getParcelas() >= vo.getQuantidadeParcelas()) {
                 taxaSelecionada = taxa;
                 break;
             }
@@ -77,31 +71,25 @@ public class SimulacaoService implements IBaseService<SimulacaoEntity> {
         return taxaSelecionada;
     }
     
-    
-    
-    private BigDecimal calcularValorParcelas(TaxaEntity taxaEntity, SimulacaoVO vo){
-        
-        Double taxa = taxaEntity.getTaxa().doubleValue()/100;
-       Double pmt = vo.getValorSimulacao().doubleValue()/
-               ((Math.pow(1+taxa, vo.getQuantidadeParcelas())-1)/
-               (Math.pow(1+taxa, vo.getQuantidadeParcelas())*taxa));
-       
-           
+    //Método que calcula o valor das parcelas (parcela fixa)
+    private BigDecimal calcularValorParcelas(TaxaEntity taxaEntity, SimulacaoVO vo) {
+        Double taxa = taxaEntity.getTaxa().doubleValue() / 100;
+        Double pmt = vo.getValorSimulacao().doubleValue()
+                / ((Math.pow(1 + taxa, vo.getQuantidadeParcelas()) - 1)
+                / (Math.pow(1 + taxa, vo.getQuantidadeParcelas()) * taxa));
+
         return new BigDecimal(pmt).setScale(2, BigDecimal.ROUND_HALF_UP);
-        
+
     }
-    
-    private BigDecimal calcularValorTotal(BigDecimal pmt, SimulacaoVO vo){
-        
+    //Método que calcula o valor total do empréstimo (baseado em parcela fixa)
+    private BigDecimal calcularValorTotal(BigDecimal pmt, SimulacaoVO vo) {
+
         return pmt.multiply(new BigDecimal(vo.getQuantidadeParcelas()));
     }
+
     //Método para excluir um registro 
-    @Override
-    public void excluir (Integer id){
+    public void excluir(Integer id) {
         repository.deleteById(id);
     }
-    
-    
-    
-    
+
 }

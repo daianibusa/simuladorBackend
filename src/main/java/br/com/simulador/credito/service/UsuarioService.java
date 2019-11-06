@@ -14,7 +14,7 @@ import br.com.simulador.credito.repository.UsuarioRepository;
  * @author Daiani
  */
 @Service
-public class UsuarioService implements IBaseService<UsuarioEntity>{
+public class UsuarioService{
     
     @Autowired //Injeta uma instancia da interface UsuarioRepository - é o mesmo que Usuario usuario = new Usuario()
     private UsuarioRepository repository;
@@ -23,13 +23,11 @@ public class UsuarioService implements IBaseService<UsuarioEntity>{
     
     
     //Método para buscar todos os registros da tabela
-    @Override
     public List<UsuarioEntity> listarTodos(){
         return repository.findAll();
     }
     
     //Método que busca um registro pelo id no banco de dados e retorna este registro 
-    @Override
     public UsuarioEntity listarPorId(Integer id){
         return repository.getOne(id);
     }
@@ -51,7 +49,6 @@ public class UsuarioService implements IBaseService<UsuarioEntity>{
     }
     
     //Método para excluir um registro 
-    @Override
     public void excluir (Integer id){
         repository.deleteById(id);
     }

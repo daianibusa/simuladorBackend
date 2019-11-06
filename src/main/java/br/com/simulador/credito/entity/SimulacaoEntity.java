@@ -19,42 +19,39 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "simulacao")
 public class SimulacaoEntity {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
-     @Column(name = "data_simulacao")
+    @Column(name = "data_simulacao")
     private Date dataSimulacao;
-    
+
     @Column(length = 80, nullable = false)
     private String nome;
-    
+
     @Column(length = 15, nullable = false)
     private String telefone;
-    
-   @Column(name = "valor_simulacao", nullable = false)
-   private BigDecimal valorSimulacao;
-   
-   @Column(name = "codigo_modalidade")
-   private Integer codigoModalidade;
-   
-   @Column(name = "nome_modalidade")
-   private String nomeModalidade;
-   
-   @Column(name = "taxa_simulacao")
-   private BigDecimal taxaSimulacao;
-   
-   @Column(name = "resultado_valor_parcela")
-   private BigDecimal resultadoValorParcela;
-   
-   @Column(name = "resultado_valor_total")
-   private BigDecimal resultadoValorTotal;
-   
-   
 
-   
+    @Column(name = "valor_simulacao", nullable = false)
+    private BigDecimal valorSimulacao;
+
+    @Column(name = "codigo_modalidade")
+    private Integer codigoModalidade;
+
+    @Column(name = "nome_modalidade")
+    private String nomeModalidade;
+
+    @Column(name = "taxa_simulacao")
+    private BigDecimal taxaSimulacao;
+
+    @Column(name = "resultado_valor_parcela")
+    private BigDecimal resultadoValorParcela;
+
+    @Column(name = "resultado_valor_total")
+    private BigDecimal resultadoValorTotal;
+
     /**
      * @return the id
      */
@@ -194,9 +191,6 @@ public class SimulacaoEntity {
     public void setResultadoValorTotal(BigDecimal resultadoValorTotal) {
         this.resultadoValorTotal = resultadoValorTotal;
     }
-
-  
-
 
     @Override
     public int hashCode() {

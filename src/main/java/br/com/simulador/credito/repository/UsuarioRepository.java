@@ -12,6 +12,8 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
  */
 @Repository
 public interface UsuarioRepository extends JpaRepository <UsuarioEntity, Integer>, QuerydslPredicateExecutor<UsuarioEntity> {
+    
+    UsuarioEntity findByEmail(String email);
 
     
 }

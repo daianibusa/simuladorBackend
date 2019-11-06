@@ -15,19 +15,17 @@ import java.util.Optional;
  * @author Daiani
  */
 @Service
-public class ModalidadeService implements IBaseService<ModalidadeEntity> {
+public class ModalidadeService  {
     
     @Autowired //Injeta uma instancia da interface ModalidadeRepository - é o mesmo que Modalidade modalidade = new Modalidade()
     private ModalidadeRepository repository;
     
      //Método para buscar todos os registros da tabela
-    @Override
     public List<ModalidadeEntity> listarTodos(){
         return repository.findAll();
     }
     
     //Método que busca um registro pelo id no banco de dados e retorna este registro 
-    @Override
     public ModalidadeEntity listarPorId(Integer id){
          return repository.getOne(id);
  
@@ -49,7 +47,6 @@ public class ModalidadeService implements IBaseService<ModalidadeEntity> {
     }
     
     //Método para excluir um registro 
-    @Override
     public void excluir (Integer id){
         repository.deleteById(id);
     }
