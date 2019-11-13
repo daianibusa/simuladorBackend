@@ -8,6 +8,7 @@ import br.com.simulador.credito.entity.SimulacaoEntity;
 import br.com.simulador.credito.entity.TaxaEntity;
 import br.com.simulador.credito.repository.ModalidadeRepository;
 import br.com.simulador.credito.repository.SimulacaoRepository;
+import br.com.simulador.credito.vo.RelatorioVO;
 import br.com.simulador.credito.vo.SimulacaoVO;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -52,6 +53,7 @@ public class SimulacaoService {
         simulacao.setTaxaSimulacao(taxaSelecionada.getTaxa());
         simulacao.setResultadoValorParcela(pmt);
         simulacao.setResultadoValorTotal(valorTotal);
+        simulacao.setQuantidadeParcelas(vo.getQuantidadeParcelas());
         simulacao.setTelefone(vo.getTelefone());
         simulacao.setValorSimulacao(vo.getValorSimulacao());
 
@@ -85,6 +87,13 @@ public class SimulacaoService {
     private BigDecimal calcularValorTotal(BigDecimal pmt, SimulacaoVO vo) {
 
         return pmt.multiply(new BigDecimal(vo.getQuantidadeParcelas()));
+    }
+    
+    public void atualizar (RelatorioVO vo){
+        SimulacaoEntity entity = repository.getOne(vo.getId());
+        entity.setSituacao(vo.getSituacao());
+        entity.setObservacao(vo.getObservacao());
+        repository.save(entity);
     }
 
     //Método para excluir um registro 

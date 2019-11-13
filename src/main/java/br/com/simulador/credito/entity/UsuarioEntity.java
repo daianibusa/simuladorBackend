@@ -112,8 +112,9 @@ public class UsuarioEntity implements UserDetails{
         }
         return true;
     }
+   
     
-    //Métodos de autenticação
+     //Métodos de autenticação
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -150,7 +151,4 @@ public class UsuarioEntity implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-    
-    
-    
 }

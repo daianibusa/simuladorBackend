@@ -2,7 +2,9 @@
 package br.com.simulador.credito.controller;
 
 import br.com.simulador.credito.entity.SimulacaoEntity;
+import br.com.simulador.credito.entity.UsuarioEntity;
 import br.com.simulador.credito.service.SimulacaoService;
+import br.com.simulador.credito.vo.RelatorioVO;
 import br.com.simulador.credito.vo.SimulacaoVO;
 import java.util.List;
 import javax.validation.ConstraintViolationException;
@@ -63,6 +65,20 @@ public class SimulacaoController {
     }
 
    
+        //Método para atualizar simulação 
+   @CrossOrigin ("/simulador-de-credito/(id)")
+   @PutMapping("/admin/relatorios")
+     public ResponseEntity atualizar(@RequestBody RelatorioVO relatorio) {
+        try {
+           this.simulacaoService.atualizar(relatorio);
+            return ResponseEntity.status(HttpStatus.OK).body(relatorio);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+    
+
+    
     //Método para excluir uma simulação 
     @DeleteMapping("/simulador-de-credito/{id}")
     public ResponseEntity excluir(@PathVariable("id") Integer id) {
