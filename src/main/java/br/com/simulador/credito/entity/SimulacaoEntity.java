@@ -42,7 +42,7 @@ public class SimulacaoEntity {
 
     @Column(name = "nome_modalidade")
     private String nomeModalidade;
-    
+
     @Column(name = "quantidade_parcelas")
     private Integer quantidadeParcelas;
 
@@ -54,16 +54,21 @@ public class SimulacaoEntity {
 
     @Column(name = "resultado_valor_total")
     private BigDecimal resultadoValorTotal;
-    
+
     @Column(length = 30)
     private String situacao;
-    
+
     @Column
     private String observacao;
 
-    /**
-     * @return the id
-     */
+    public SimulacaoEntity() {
+        this.situacao = "Sem contato";
+    }
+            
+        
+            /**
+             * @return the id
+             */
     public Integer getId() {
         return id;
     }
@@ -201,7 +206,7 @@ public class SimulacaoEntity {
         this.resultadoValorTotal = resultadoValorTotal;
     }
 
-       /**
+    /**
      * @return the situacao
      */
     public String getSituacao() {
@@ -242,7 +247,7 @@ public class SimulacaoEntity {
     public void setQuantidadeParcelas(Integer quantidadeParcelas) {
         this.quantidadeParcelas = quantidadeParcelas;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -268,5 +273,4 @@ public class SimulacaoEntity {
         return true;
     }
 
- 
 }

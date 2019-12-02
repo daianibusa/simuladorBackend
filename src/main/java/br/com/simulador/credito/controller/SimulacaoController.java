@@ -66,8 +66,7 @@ public class SimulacaoController {
 
    
         //Método para atualizar simulação 
-   @CrossOrigin ("/simulador-de-credito/(id)")
-   @PutMapping("/admin/relatorios")
+   @PutMapping("/admin/leads/{id}")
      public ResponseEntity atualizar(@RequestBody RelatorioVO relatorio) {
         try {
            this.simulacaoService.atualizar(relatorio);
